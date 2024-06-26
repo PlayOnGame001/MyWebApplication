@@ -1,0 +1,41 @@
+﻿@{
+	ViewBag.Title = "Заметки";
+}
+@model IEnumerable<Note>
+
+<div class="container px-4 py-5" id="hanging-icons">
+	<div class="row g-4 py-5 row-cols-1">
+		<div>
+			<a asp-controller="Notes" asp-action="CreateUpdate" class="btn btn-primary">Добавить заметку</a>
+		</div>
+
+		<h3>Заметки</h3>
+		
+		<div class="p-5 mb-4 bg-light rounded-3 ovx">
+			<table class="table table-hover">
+				<tr>
+					<th>Название</th>
+					<th>Описание</th>
+					<th></th>
+					<th></th>
+				</tr>
+				@foreach (Note note in Model)
+				{
+					<tr>
+						<td>@note.Title</td>
+						<td>@note.Description</td>
+						<td>
+							<a class="btn btn-sm btn-primary" asp-controller="Notes" asp-action="CreateUpdate" asp-route-noteId="@note.Id">Изменить</a>
+						</td>
+						<td>
+							<form asp-controller="Notes" asp-action="Delete" asp-route-noteId="@note.Id" method="post">
+								@Html.AntiForgeryToken()
+								<button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+							</form>
+						</td>
+					</tr>
+				}
+			</table>
+		</div>
+	</div>
+</div>
